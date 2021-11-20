@@ -6,7 +6,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "node ./node_modules/nodemon/bin/nodemon.js ./bin/www"
+    "start": "node ./node_modules/nodemon/bin/nodemon.js ./bin/www",
+    "initializeDB": "./db/migration_SQLtoMongo/2_initializeDB.sh"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
