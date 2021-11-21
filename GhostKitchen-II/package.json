@@ -7,6 +7,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./node_modules/nodemon/bin/nodemon.js ./bin/www",
+    "migrate": "./db/migration_SQLtoMongo/1_SQLtoMongo.py",
     "initializeDB": "./db/migration_SQLtoMongo/2_initializeDB.sh"
   },
   "dependencies": {
