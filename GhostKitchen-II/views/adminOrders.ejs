@@ -36,24 +36,24 @@
                     <tbody>
                         <% orders.forEach(function (f) {%>
                                 <td scope="col">
-                                    <%= f.id %>
+                                    <%= f.order_id %>
                                 </td>
                                 <td scope="col">
-                                    <%= f.brand_name %>
+                                    <%= f.meal_info.brand_name %>
                                 </td>
                                 <td scope="col" style="text-transform:capitalize">
-                                    <%= f.meal_name %>
+                                    <%= f.meal_info.name %>
                                 </td>
                                 <td scope="col">
-                                    <%= f.quantity %>
+                                    <%= f.order_quantity %>
                                 </td>
                                 <td scope="col" style="text-transform:capitalize">
-                                    <%= f.type %>
+                                    <%= f.pickup_type %>
                                 </td>
                                 <td>
-                                    <form action="/admin/orders/<%= f.id %>/update" method="POST">
+                                    <form action="/admin/orders/<%= f.order_id %>/update" method="POST">
                                         <button type="submit" class="btn btn-danger"
-                                        name="orderID" value=<%= f.id %>>
+                                        name="orderID" value=<%= f.order_id %>>
                                             PICKED UP
                                         </button>
                                     </form>
