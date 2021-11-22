@@ -76,11 +76,12 @@ router.post("/admin/meals/create", async function (req, res, next) {
   console.log("Got post create/meal");
   console.log(req.body);
   const meal = req.body;
+  const brand_name = req.body.brand_name;
   const brandID = req.body.brandID;
   console.log(`expect${brandID}`);
   console.log("got create meal", meal);
 
-  await myDB.createMeal(meal, brandID);
+  await myDB.createMeal(meal, brand_name, brandID);
 
   console.log("Meal created");
 

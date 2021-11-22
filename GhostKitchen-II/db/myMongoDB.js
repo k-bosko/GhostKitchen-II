@@ -168,7 +168,7 @@ async function getBrandsBy(brandID){
   }
 }
 
-async function createMeal(newMeal, brandID){
+async function createMeal(newMeal, brand_name, brandID){
   let client;
 
   try {
@@ -186,11 +186,12 @@ async function createMeal(newMeal, brandID){
 
     const query = 
       {
+        brand_name: brand_name,
         brand_id: parseInt(brandID),
         meal_name: newMeal.meal_name,
         meal_desc: newMeal.meal_desc,
         calories: parseInt(newMeal.calories),
-        price: newMeal.price,
+        price: parseFloat(newMeal.price),
       }
     const result = await collection.insertOne(query);
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
