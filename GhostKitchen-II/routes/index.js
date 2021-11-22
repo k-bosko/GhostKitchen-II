@@ -60,32 +60,32 @@ router.get("/admin/brands", async function (req, res, next) {
 router.get("/admin/brands/:brandID/meals/", async function (req, res, next) {
   //params come with GET, brandID is in params
   console.log("Got request for meals page.");
-
+  console.log(req.params);
   const brandID = req.params.brandID;
   console.log(`brandId is ${brandID}`);
 
   const meals = await myDB.getMealsBy(brandID);
   const brands = await myDB.getBrandsBy(brandID);
-
+  console.log(brands);
   //render the _adminMeals_ template with the meals attribute as meals (from DB)
   res.render("adminMeals", { meals: meals, brands: brands });
 });
 
-// /*POST create meals. */
-// router.post("/admin/meals/create", async function (req, res, next) {
-//   console.log("Got post create/meal");
+/*POST create meals. */
+router.post("/admin/meals/create", async function (req, res, next) {
+  console.log("Got post create/meal");
+  console.log(req.body);
+  const meal = req.body;
+  const brandID = req.body.brandID;
+  console.log(`expect${brandID}`);
+  console.log("got create meal", meal);
 
-//   const meal = req.body;
-//   const brandID = req.body.brandID;
-//   console.log(`expect${brandID}`);
-//   console.log("got create meal", meal);
+  await myDB.createMeal(meal, brandID);
 
-//   await myDB.createMeal(meal, brandID);
+  console.log("Meal created");
 
-//   console.log("Meal created");
-
-//   res.redirect(`/admin/brands/${brandID}/meals`);
-// });
+  res.redirect(`/admin/brands/${brandID}/meals`);
+});
 
 // /* POST delete meal. */
 // router.post("/admin/meals/delete", async function (req, res) {

@@ -168,10 +168,43 @@ async function getBrandsBy(brandID){
   }
 }
 
+async function createMeal(newMeal, brandID){
+  let client;
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("meals");
+
+    const query = 
+      {
+        brand_id: parseInt(brandID),
+        meal_name: newMeal.meal_name,
+        meal_desc: newMeal.meal_desc,
+        calories: parseInt(newMeal.calories),
+        price: newMeal.price,
+      }
+    const result = await collection.insertOne(query);
+    console.log(`A document was inserted with the _id: ${result.insertedId}`);
+
+  } finally {
+    await client.close();
+  }
+}
+
 module.exports = {
   getUser,
   getBrands,
   getMealsBy,
   getOrdersBy,
-  getBrandsBy
+  getBrandsBy,
+  createMeal
 };
