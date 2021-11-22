@@ -38,12 +38,13 @@
                                         <%= f.meal_name %>
                                     </td>
                                     <td scope="col">
-                                        <%= f.description %>
+                                        <%= f.meal_desc %>
                                     </td>
                                     <td scope="col">
                                         <%= f.calories%>
                                     </td>
-                                    <td scope="col">$<%= f.price %>
+                                    <td scope="col">
+                                        $<%= f.price %>
                                     </td>
                                     <td>
                                         <form action="/admin/meals/<%= f.id %>" method="GET">

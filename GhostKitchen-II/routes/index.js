@@ -57,7 +57,7 @@ router.get("/admin/brands", async function (req, res, next) {
 });
 
 /*GET Admin (meals) page. */
-router.get("/admin/brands/:brandID/meals", async function (req, res, next) {
+router.get("/admin/brands/:brandID/meals/", async function (req, res, next) {
   //params come with GET, brandID is in params
   console.log("Got request for meals page.");
 

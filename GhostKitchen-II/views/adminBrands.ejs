@@ -28,7 +28,7 @@
       <br />
       <div class="col-md-12 text-center">
           <% brands.forEach(function (f) {%>
-          <form action="/admin/brands/<%= f.id %>/meals/" method="GET">
+          <form action="/admin/brands/<%= f._id %>/meals/" method="GET">
             </br>
             <button type="submit"
                     class="btn btn-primary"
