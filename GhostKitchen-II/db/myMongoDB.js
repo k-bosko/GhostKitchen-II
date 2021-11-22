@@ -131,9 +131,47 @@ async function getOrdersBy(userID) {
   }
 }
 
+/* Jiayi */
+
+async function getBrandsBy(brandID){
+  let client;
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("meals");
+
+    const query = [
+      {
+        $match: {
+          brand_id: parseInt(brandID),
+          //^^important!!! brandID is string, need to convert to integer
+        },
+      },
+    ];
+
+    const brands = await collection.aggregate(query).toArray();
+
+    console.log("brands from db", brands);
+
+    return brands;
+  } finally {
+    await client.close();
+  }
+}
+
 module.exports = {
   getUser,
   getBrands,
   getMealsBy,
   getOrdersBy,
+  getBrandsBy
 };
