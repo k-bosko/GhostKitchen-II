@@ -35,7 +35,7 @@
           <tbody>
             <% meals.forEach(function (f) {%>
               <tr>
-                <form action="/user/brands/<%= brandID %>/menu/<%= f.meal_id %>/order/" method="GET">
+                <form action="/user/brands/<%= brandID %>/menu/<%= f._id %>/order/" method="GET">
                   <td scope="col">
                     <%= f.meal_name %>
                   </td>

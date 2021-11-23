@@ -120,7 +120,7 @@ async function getOrdersBy(userID) {
       {
         $match: {
           customer_id: parseInt(userID),
-          //^^important!!! userID is string, need to convert to integer
+          pickup_time: null,
         },
       },
     ];
@@ -134,10 +134,11 @@ async function getOrdersBy(userID) {
     await client.close();
   }
 }
+/* ------Katerina----- */
 
 /* Jiayi */
 
-async function getBrandsBy(brandID){
+async function getBrandsBy(brandID) {
   let client;
 
   try {
@@ -172,7 +173,7 @@ async function getBrandsBy(brandID){
   }
 }
 
-async function createMeal(newMeal, brand_name, brandID){
+async function createMeal(newMeal, brand_name, brandID) {
   let client;
 
   try {
@@ -188,18 +189,16 @@ async function createMeal(newMeal, brand_name, brandID){
 
     const collection = db.collection("meals");
 
-    const query = 
-      {
-        brand_name: brand_name,
-        brand_id: parseInt(brandID),
-        meal_name: newMeal.meal_name,
-        meal_desc: newMeal.meal_desc,
-        calories: parseInt(newMeal.calories),
-        price: parseFloat(newMeal.price),
-      }
+    const query = {
+      brand_name: brand_name,
+      brand_id: parseInt(brandID),
+      meal_name: newMeal.meal_name,
+      meal_desc: newMeal.meal_desc,
+      calories: parseInt(newMeal.calories),
+      price: parseFloat(newMeal.price),
+    };
     const result = await collection.insertOne(query);
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
-
   } finally {
     await client.close();
   }
@@ -222,16 +221,13 @@ async function getAllCurrentOrders() {
 
     const collection = db.collection("orders");
 
-    const query = 
-    [
+    const query = [
       {
         $match: {
           pickup_time: null,
-  
         },
       },
     ];
-    
 
     const orders = await collection.aggregate(query).toArray();
 
@@ -243,7 +239,7 @@ async function getAllCurrentOrders() {
   }
 }
 
-async function updatePickupTime(orderID){
+async function updatePickupTime(orderID) {
   let client;
 
   try {
@@ -261,12 +257,11 @@ async function updatePickupTime(orderID){
 
     const collection = db.collection("orders");
 
-    const query = 
-      {_id: ObjectId(orderID)}
-      
+    const query = { _id: ObjectId(orderID) };
+
     const update = {
       $set: {
-        pickup_time: pickup_time.toLocaleString()
+        pickup_time: pickup_time.toLocaleString(),
       },
     };
 
@@ -322,39 +317,21 @@ async function getMealByMealID(mealID) {
     const collection = db.collection("meals");
 
     const meal = await collection.findOne({ _id: ObjectId(mealID) });
-
+    console.log("current meal:", meal);
     return meal;
   } finally {
     await client.close();
   }
 }
 
-//Katerina's getMeal
-async function getMeal(mealID) {
-  let client;
-
-  try {
-    const url = "mongodb://localhost:27017";
-
-    client = new MongoClient(url);
-
-    await client.connect();
-
-    console.log("Connected to Mongo Server");
-
-    const db = client.db("GhostKitchen");
-
-    const collection = db.collection("meals");
-
-    const meal = await collection.findOne({ meal_id: parseInt(mealID) });
-
-    return meal;
-  } finally {
-    await client.close();
-  }
-}
-
-async function updateMeal(mealID, brandID, meal_name, meal_desc, calories, price) {
+async function updateMeal(
+  mealID,
+  brandID,
+  meal_name,
+  meal_desc,
+  calories,
+  price
+) {
   let client;
 
   try {
@@ -378,7 +355,7 @@ async function updateMeal(mealID, brandID, meal_name, meal_desc, calories, price
         meal_name: meal_name,
         meal_desc: meal_desc,
         calories: parseInt(calories),
-        price: parseFloat(price)
+        price: parseFloat(price),
       },
     };
 
@@ -396,7 +373,9 @@ async function updateMeal(mealID, brandID, meal_name, meal_desc, calories, price
     await client.close();
   }
 }
+/* Jiayi */
 
+/* ------Katerina----- */
 async function getLocations(renewCache = false) {
   let client;
 
@@ -642,7 +621,6 @@ module.exports = {
   getAllCurrentOrders,
   updatePickupTime,
   deleteMeal,
-  getMeal,
   getMealByMealID,
   updateMeal,
   getPickup,
