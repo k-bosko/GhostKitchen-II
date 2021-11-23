@@ -49,18 +49,18 @@
                                     $<%= f.meal_info.price * f.order_quantity %>
                                 </td>
                                 <td scope="col" style="text-transform:capitalize">
-                                    <%= f.pickup_type %>
+                                    <%= f.pickup.type %>
                                 </td>
                                 <td>
-                                    <form action="/user/orders/<%= f.order_id %>" method="GET">
+                                    <form action="/user/orders/<%= f._id %>" method="GET">
                                         <button type="submit" class="btn btn-primary">
                                             UPDATE
                                         </button>
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="/user/orders/delete" method="POST">
-                                        <input type="hidden" name="orderID" value="<%= f.id %>">
+                                    <form action="/user/orders/delete/" method="POST">
+                                        <input type="hidden" name="orderID" value="<%= f._id %>">
                                         <button type="submit" class="btn btn-danger">
                                             DELETE
                                         </button>

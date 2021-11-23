@@ -1,4 +1,9 @@
 const { MongoClient } = require("mongodb");
+let ObjectId = require("mongodb").ObjectId;
+
+// cached propeties
+let cachedPickups;
+let cachedLocations;
 
 async function getUser(userId) {
   let client;
@@ -88,8 +93,6 @@ async function getMealsBy(brandID) {
 
     const meals = await collection.aggregate(query).toArray();
 
-    console.log("meals from db", meals);
-
     return meals;
   } finally {
     await client.close();
@@ -131,9 +134,279 @@ async function getOrdersBy(userID) {
   }
 }
 
+async function getMeal(mealID) {
+  let client;
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("meals");
+
+    const meal = await collection.findOne({ meal_id: parseInt(mealID) });
+
+    return meal;
+  } finally {
+    await client.close();
+  }
+}
+
+async function getLocations(renewCache = false) {
+  let client;
+
+  if (!renewCache && cachedLocations) {
+    console.log("Get cachedLocations");
+    return cachedLocations;
+  }
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("locations");
+
+    const locations = await collection.find({}).toArray();
+
+    cachedLocations = locations;
+
+    return locations;
+  } finally {
+    await client.close();
+  }
+}
+
+async function getPickup(renewCache = false) {
+  let client;
+
+  if (!renewCache && cachedPickups) {
+    console.log("Get chachedPickups");
+    return cachedPickups;
+  }
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("locations");
+
+    const pickups = await collection.findOne(
+      { id: 1 },
+      { pickup_types: 1, _id: 0 }
+    );
+
+    //Note: since we have the same pickup types for every location,
+    //we can pick just 1 location, e.g. id: 1
+    //in the future should be replaced with javascript
+    //in order to choose the pickup type based on restaurant chosen
+
+    cachedPickups = pickups["pickup_types"];
+
+    return cachedPickups;
+  } finally {
+    await client.close();
+  }
+}
+
+async function getPickupByID(pickupId) {
+  if (!cachedPickups) {
+    await getPickup(true);
+  }
+
+  let pickup = cachedPickups.find((p) => p.id === pickupId);
+  if (!pickup) {
+    await getPickup(true);
+    pickup = cachedPickups.find((p) => p.id === pickupId);
+  }
+  return pickup;
+}
+
+async function getLocationByID(locationId) {
+  if (!cachedLocations) {
+    await getLocations(true);
+  }
+
+  let location = cachedLocations.find((p) => p.id === locationId);
+  if (!location) {
+    await getLocations(true);
+    location = cachedLocations.find((p) => p.id === locationId);
+  }
+  return location;
+}
+
+async function createOrder(quantity, pickup, location, meal, userID) {
+  let client;
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("orders");
+
+    const time_ordered = new Date(Date.now());
+
+    const query = {
+      customer_id: parseInt(userID),
+      order_quantity: parseInt(quantity),
+      order_time: time_ordered.toLocaleString(),
+      pickup_time: null,
+      meal_info: {
+        brand_id: meal.brand_id,
+        brand_name: meal.brand_name,
+        id: meal.meal_id,
+        name: meal.meal_name,
+        desc: meal.meal_desc,
+        price: meal.price,
+      },
+      location: {
+        id: location.id,
+        address: location.address,
+        state: location.state,
+        phone_number: location.phone_number,
+      },
+      pickup: { id: pickup.id, type: pickup.type },
+    };
+
+    const result = await collection.insertOne(query);
+    console.log(`A document was inserted with the _id: ${result.insertedId}`);
+  } finally {
+    await client.close();
+  }
+}
+
+async function getOrderByID(orderID) {
+  let client;
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("orders");
+
+    const order = await collection.findOne({ _id: ObjectId(orderID) });
+
+    console.log("order from db", order);
+
+    return order;
+  } finally {
+    await client.close();
+  }
+}
+
+async function updateOrder(orderID, quantity, pickup) {
+  let client;
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("orders");
+
+    const filter = { _id: ObjectId(orderID) };
+
+    const update = {
+      $set: {
+        order_quantity: quantity,
+        "pickup.id": pickup.id,
+        "pickup.type": pickup.type,
+      },
+    };
+
+    const result = await collection.updateOne(filter, update);
+    console.log(
+      `${result.matchedCount} document(s) matched the filter, 
+      updated ${result.modifiedCount} document(s)`
+    );
+
+    return result;
+  } catch (error) {
+    console.log(`caught - ${error}`);
+    throw error;
+  } finally {
+    await client.close();
+  }
+}
+
+async function deleteOrder(orderID) {
+  let client;
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("orders");
+
+    const order = await collection.deleteOne({ _id: ObjectId(orderID) });
+
+    return order;
+  } finally {
+    await client.close();
+  }
+}
+
 module.exports = {
   getUser,
   getBrands,
   getMealsBy,
   getOrdersBy,
+  getMeal,
+  getPickup,
+  getPickupByID,
+  getLocations,
+  getLocationByID,
+  createOrder,
+  getOrderByID,
+  updateOrder,
+  deleteOrder,
 };
+
+//useful documentation
+//update: //https://docs.mongodb.com/drivers/node/current/usage-examples/updateOne/
