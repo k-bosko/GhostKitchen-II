@@ -47,8 +47,9 @@
                                         $<%= f.price %>
                                     </td>
                                     <td>
-                                        <form action="/admin/meals/<%= f._id %>" method="GET">
-                                            <input type="hidden" name="brandID" value="<%= brands[0].brand_id %>">
+                                        <form action="/admin/brands/<%= brands[0].brand_id %>/meals/<%= f._id %>" method="GET">
+                                            <!-- <input type="hidden" name="brandID" value="<%= brands[0].brand_id %>"> -->
+                                        
                                             <button type="submit" class="btn btn-primary">
                                                 UPDATE
                                             </button>

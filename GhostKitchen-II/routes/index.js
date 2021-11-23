@@ -107,14 +107,15 @@ router.post("/admin/meals/delete", async function (req, res) {
 });
 
 /* GET update adminMeals page. */
-router.get("/admin/meals/:mealID", async function (req, res, next) {
+router.get("/admin/brands/:brandID/meals/:mealID", async function (req, res, next) {
   console.log("Got adminMeals update");
 
   const mealID = req.params.mealID;
-  const brandID = req.body.brandID;
+  const brandID = req.params.brandID;
 
   console.log("got meal details", mealID);
-
+  console.log(req.body);
+  console.log("got brandID", brandID);
   const mealDetails = await myDB.getMeal(mealID);
 
   console.log("meal details", mealDetails);
@@ -125,7 +126,7 @@ router.get("/admin/meals/:mealID", async function (req, res, next) {
 });
 
 /* POST update adminMeals page. */
-router.post("/admin/meals/:mealID", async function (req, res, next) {
+router.post("/admin/meals/update/", async function (req, res, next) {
   console.log("got update POST request");
   console.log(req.body);
 
@@ -133,15 +134,16 @@ router.post("/admin/meals/:mealID", async function (req, res, next) {
 
   const brandID = req.body.brandID;
   const meal_name = req.body.meal_name;
-  const description = req.body.description;
+  const meal_desc = req.body.description;
   const calories = req.body.calories;
   const price = req.body.price;
+  console.log(meal_desc);
 
   await myDB.updateMeal(
     mealID,
     brandID,
     meal_name,
-    description,
+    meal_desc,
     calories,
     price
   );

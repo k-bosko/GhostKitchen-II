@@ -321,6 +321,49 @@ async function getMeal(mealID) {
   }
 }
 
+async function updateMeal(mealID, brandID, meal_name, meal_desc, calories, price) {
+  let client;
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("meals");
+
+    const filter = { _id: ObjectId(mealID) };
+
+    const update = {
+      $set: {
+        brand_id: parseInt(brandID),
+        meal_name: meal_name,
+        meal_desc: meal_desc,
+        calories: parseInt(calories),
+        price: parseFloat(price)
+      },
+    };
+
+    const result = await collection.updateOne(filter, update);
+    console.log(
+      `${result.matchedCount} document(s) matched the filter, 
+      updated ${result.modifiedCount} document(s)`
+    );
+
+    return result;
+  } catch (error) {
+    console.log(`caught - ${error}`);
+    throw error;
+  } finally {
+    await client.close();
+  }
+}
+
 async function getLocations(renewCache = false) {
   let client;
 
@@ -566,6 +609,7 @@ module.exports = {
   updatePickupTime,
   deleteMeal,
   getMeal,
+  updateMeal,
   getPickup,
   getPickupByID,
   getLocations,

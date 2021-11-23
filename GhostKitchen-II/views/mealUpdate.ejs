@@ -24,9 +24,9 @@
         </div>
         <hr />
         <div class="col-4">
-        <form action="/admin/meals/<%= mealDetails.id %>" method="POST">
+        <form action="/admin/meals/update/" method="POST">
           <div>
-            <input type="hidden" class="form-control" name="mealID" value="<%= mealDetails.id %>" />
+            <input type="hidden" class="form-control" name="mealID" value="<%= mealDetails._id %>" />
           </div>
           <div>
             <label class="form-label" style="font-weight: bold;">Meal Name:
@@ -35,7 +35,7 @@
           </div>
 
           <div>
-            <label class="form-label" style="font-weight: bold;">Description:
+            <label class="form-label" style="font-weight: bold;">Description:<%= mealDetails.meal_desc %>
               <input required="true" name="description" type="text" class="form-control"
                 value="<%= mealDetails.meal_desc %>" /></label>
           </div>
