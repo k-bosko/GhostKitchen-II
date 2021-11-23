@@ -23,13 +23,13 @@
         </div>
         <hr />
         <div class="col-4">
-          <form action="/user/brands/<%= brandID %>/menu/<%= meal.id %>/order/create" method="POST">
+          <form action="/user/brands/<%= brandID %>/menu/<%= meal.meal_id %>/order/create/" method="POST">
             <div class="display-6 text-capitalize">
               <%= meal.meal_name %>
             </div>
             <br />
             <div class="lead">
-              <%= meal.description %>
+              <%= meal.meal_desc %>
             </div>
             <br />
             <div>
@@ -46,10 +46,10 @@
             <br />
             <div>
               <label for="pickup-select" style="font-weight: bold;">Pickup Type:</label>
-              <select class="form-control" id="pickup-select" name="pickup">
+              <select class="form-control" id="pickup-select" name="pickup_id">
                 <% pickups.forEach(function (f) {%>
                   <option value="<%= f.id %>">
-                    <%= f.type%>
+                    <%= f.type %>
                   </option>
                   <% }) %>
               </select>
@@ -57,7 +57,7 @@
             <br />
             <div>
               <label for="location-select" style="font-weight: bold;">Location:</label>
-              <select class="form-control" id="location-select" name="location">
+              <select class="form-control" id="location-select" name="location_id">
                 <% locations.forEach(function (f) {%>
                   <option value="<%= f.id %>">
                     <%= f.address%>, <%= f.state%>
@@ -67,8 +67,8 @@
             </div>
             <br />
             <div>
-              <button type="submit" class="btn btn-primary" style="width: 100%;" name="mealID"
-                value="<%= meal.id %>">Checkout</button>
+              <button type="submit" class="btn btn-primary" style="width: 100%;" name="meal_id"
+                value="<%= meal.meal_id %>">Checkout</button>
             </div>
           </form>
         </div>

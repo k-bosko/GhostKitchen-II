@@ -51,9 +51,9 @@
                                     <%= f.pickup_type %>
                                 </td>
                                 <td>
-                                    <form action="/admin/orders/<%= f.order_id %>/update" method="POST">
+                                    <form action="/admin/orders/update" method="POST">
                                         <button type="submit" class="btn btn-danger"
-                                        name="orderID" value=<%= f.order_id %>>
+                                        name="orderID" value=<%= f._id %>>
                                             PICKED UP
                                         </button>
                                     </form>

@@ -24,20 +24,20 @@
                 </div>
                 <hr />
                 <div class="col-4">
-                    <form action="/user/orders/<%= orderDetails.order_id %>" method="POST">
+                    <form action="/user/orders/update/" method="POST">
                         <div class="display-6 text-capitalize">
-                            <%= orderDetails.meal_name %>
+                            <%= orderDetails.meal_info.name %>
                         </div>
                         <br />
                         <div class="lead">
-                            <%= orderDetails.description %>
+                            <%= orderDetails.meal_info.desc %>
                         </div>
                         <br />
                         <div>
                             <label for="pickup-select" style="font-weight: bold;">Quantity</label>
                             <select class="form-control" id="quantity-select" name="quantity">
                                 <% for (let i=1; i<=20; i++) {%>
-                                    <option value="<%= i %>" <% if(i===orderDetails.quantity) { %> selected <% } %>>
+                                    <option value="<%= i %>" <% if(i===orderDetails.order_quantity) { %> selected <% } %>>
                                             <%= i %>
                                     </option>
                                     <% } %>
@@ -46,9 +46,9 @@
                         <br />
                         <div>
                             <label for="pickup-select" style="font-weight: bold;">Pickup Type</label>
-                            <select class="form-control" id="pickup-select" name="pickup">
+                            <select class="form-control" id="pickup-select" name="pickupID">
                                 <% for (const f of pickups) {%>
-                                    <option value="<%= f.id %>" <% if(f.id===orderDetails.pickup_id) { %> selected <% }
+                                    <option value="<%= f.id %>" <% if(f.id===orderDetails.pickup.id) { %> selected <% }
                                             %>>
                                             <%= f.type %>
                                     </option>
@@ -57,7 +57,7 @@
                         </div>
                         <br />
                         <button type="submit" class="btn btn-primary" style="width: 100%;" name="orderID"
-                            value="<%= orderDetails.order_id %>">Update
+                            value="<%= orderDetails._id %>">Update
                         </button>
                     </form>
                 </div>

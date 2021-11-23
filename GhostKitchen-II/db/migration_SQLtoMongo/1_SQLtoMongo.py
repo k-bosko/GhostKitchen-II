@@ -16,8 +16,9 @@ path = f"{os.getcwd()}/db/migration_SQLtoMongo/"
 subprocess.run(["/usr/local/opt/sqlite/bin/sqlite3", f"{path}/ghost_kitchen.db", ".mode json", f".once '{path}/Orders.json'", 
             '''SELECT c.id AS customer_id, m.id AS meal_id,
             m.meal_name, m.description AS meal_description, m.price,
-            pt.type AS pickup_type, l.address, l.state, l.phone_number, vb.brand_name,
-            o.quantity AS order_quantity, o.order_time, o.pickup_time, o.id AS order_id
+            pt.id AS pickup_id, pt.type AS pickup_type, 
+            l.id AS location_id, l.address, l.state, l.phone_number, vb.id AS brand_id, vb.brand_name,
+            o.quantity AS order_quantity, o.order_time, o.pickup_time
          FROM Orders AS o
          JOIN Meal AS m
          ON o.meal_id = m.id
@@ -37,19 +38,27 @@ with open(f'{path}/Orders.json', 'r') as f:
 
 #need to re-format to group some values into one object
 for row in orders:
-    row['meal_info'] = {'brand_name': row['brand_name'], 'id': row['meal_id'], 
+    row['meal_info'] = {'brand_id': row['brand_id'], 'brand_name': row['brand_name'], 'id': row['meal_id'], 
                         'name': row['meal_name'], 'desc': row['meal_description'], 
                         'price': row['price']}
+    del row['brand_id'], 
     del row['brand_name']
     del row['meal_id']
     del row['meal_name']
     del row['meal_description']
     del row['price']
-    row['location'] = {'address': row['address'], 'state': row['state'], 
+
+    row['location'] = {'id': row['location_id'], 'address': row['address'], 'state': row['state'], 
                        'phone_number': row['phone_number']}
+    
+    del row['location_id']
     del row['address']
     del row['state']
     del row['phone_number']
+
+    row['pickup'] = {'id': row['pickup_id'], 'type': row['pickup_type']}
+    del row['pickup_id']
+    del row['pickup_type']
 
 with open(f'{path}/Orders.json', 'w') as f:
     json.dump(orders, f)
@@ -77,4 +86,38 @@ subprocess.run(["/usr/local/opt/sqlite/bin/sqlite3", f"{path}/ghost_kitchen.db",
          LEFT JOIN Rating AS r
          ON r.meal_id = m.id'''])
 
+#5. Create Locations.json
+locations = [{"id": 1, "address": "3650 Rosecrans Street, San Diego", "state": "CA", "phone_number": "450-345-8924",
+              "pickup_types": [{"id": 1, "type": "takeout"}, 
+                              {"id": 2, "type": "drive_through"},
+                              {"id": 3, "type": "Doordash"},
+                              {"id": 4, "type": "UberEats"},
+                              {"id": 5, "type": "GrubHub"}]}, 
+             {"id": 2, "address": "5198 Commons Drive, Denver", "state": "CO", "phone_number": "370-529-8023",
+             "pickup_types": [{"id": 1, "type": "takeout"}, 
+                              {"id": 2, "type": "drive_through"},
+                              {"id": 3, "type": "Doordash"},
+                              {"id": 4, "type": "UberEats"},
+                              {"id": 5, "type": "GrubHub"}]},
+             {"id": 3, "address": "2521 Palomar Airport Rd, Los Angeles", "state": "CA", "phone_number": "293-327-9275",
+             "pickup_types": [{"id": 1, "type": "takeout"}, 
+                              {"id": 2, "type": "drive_through"},
+                              {"id": 3, "type": "Doordash"},
+                              {"id": 4, "type": "UberEats"},
+                              {"id": 5, "type": "GrubHub"}]},
+             {"id": 4, "address": "575 Market St, Seattle", "state": "WA", "phone_number": "293-327-9275",
+              "pickup_types": [{"id": 1, "type": "takeout"}, 
+                              {"id": 2, "type": "drive_through"},
+                              {"id": 3, "type": "Doordash"},
+                              {"id": 4, "type": "UberEats"},
+                              {"id": 5, "type": "GrubHub"}]},
+             {"id": 5, "address": "3410 Via Mercato, Portland", "state": "OR", "phone_number": "331-672-5915",
+              "pickup_types": [{"id": 1, "type": "takeout"}, 
+                              {"id": 2, "type": "drive_through"},
+                              {"id": 3, "type": "Doordash"},
+                              {"id": 4, "type": "UberEats"},
+                              {"id": 5, "type": "GrubHub"}]}
+            ]
+with open(f'{path}/Locations.json', 'w') as f:
+    json.dump(locations, f)
 #useful documentation - https://stackoverflow.com/questions/5491858/how-to-export-sqlite-to-json
