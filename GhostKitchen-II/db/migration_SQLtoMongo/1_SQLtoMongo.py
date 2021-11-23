@@ -76,8 +76,8 @@ subprocess.run(["/usr/local/opt/sqlite/bin/sqlite3", f"{path}/ghost_kitchen.db",
          JOIN Virtual_Brand AS vb
          ON m.brand_id = vb.id'''])
 
-#4. Create Rating.json
-subprocess.run(["/usr/local/opt/sqlite/bin/sqlite3", f"{path}/ghost_kitchen.db", ".mode json", f".once {path}/Rating.json", 
+#4. Create Ratings.json
+subprocess.run(["/usr/local/opt/sqlite/bin/sqlite3", f"{path}/ghost_kitchen.db", ".mode json", f".once {path}/Ratings.json", 
             '''SELECT vb.brand_name, vb.id AS brand_id, m.id AS meal_id,
             m.meal_name, m.description AS meal_desc, r.customer_id, r.rating
          FROM Meal AS m
