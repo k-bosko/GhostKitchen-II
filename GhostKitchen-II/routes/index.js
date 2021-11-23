@@ -108,23 +108,26 @@ router.post("/admin/meals/delete", async function (req, res) {
 });
 
 /* GET update adminMeals page. */
-router.get("/admin/brands/:brandID/meals/:mealID", async function (req, res, next) {
-  console.log("Got adminMeals update");
+router.get(
+  "/admin/brands/:brandID/meals/:mealID",
+  async function (req, res, next) {
+    console.log("Got adminMeals update");
 
-  const mealID = req.params.mealID;
-  const brandID = req.params.brandID;
+    const mealID = req.params.mealID;
+    const brandID = req.params.brandID;
 
-  console.log("got meal details", mealID);
-  console.log(req.body);
-  console.log("got brandID", brandID);
-  const mealDetails = await myDB.getMealByMealID(mealID);
+    console.log("got meal details", mealID);
+    console.log(req.body);
+    console.log("got brandID", brandID);
+    const mealDetails = await myDB.getMealByMealID(mealID);
 
-  console.log("meal details", mealDetails);
-  res.render("mealUpdate", {
-    mealDetails: mealDetails,
-    brandID: brandID,
-  });
-});
+    console.log("meal details", mealDetails);
+    res.render("mealUpdate", {
+      mealDetails: mealDetails,
+      brandID: brandID,
+    });
+  }
+);
 
 /* POST update adminMeals page. */
 router.post("/admin/meals/update/", async function (req, res, next) {
@@ -140,14 +143,7 @@ router.post("/admin/meals/update/", async function (req, res, next) {
   const price = req.body.price;
   console.log(meal_desc);
 
-  await myDB.updateMeal(
-    mealID,
-    brandID,
-    meal_name,
-    meal_desc,
-    calories,
-    price
-  );
+  await myDB.updateMeal(mealID, brandID, meal_name, meal_desc, calories, price);
 
   console.log(`Meal updated`);
   res.redirect(`/admin/brands/${brandID}/meals`);
@@ -177,7 +173,6 @@ router.get("/user/brands/:brandID/menu/", async function (req, res, next) {
   res.render("menu", { meals: meals, brandID: brand_ID });
 });
 
-//TODO
 /* GET order page. */
 router.get(
   "/user/brands/:brandID/menu/:mealID/order/",
@@ -188,7 +183,8 @@ router.get(
     console.log(`user_id is ${req.user.id}`);
 
     const brandID = req.params.brandID;
-    const meal = await myDB.getMeal(req.params.mealID);
+    const meal = await myDB.getMealByMealID(req.params.mealID);
+
     const pickups = await myDB.getPickup();
     const locations = await myDB.getLocations();
 
@@ -208,18 +204,18 @@ router.get(
 
 // /* POST order page. */
 router.post(
-  "/user/brands/:brandID/menu/:mealID/order/create/",
+  "/user/brands/:brandID/menu/order/create/",
   async function (req, res, next) {
     console.log("Got POST to create order");
     const userID = req.user.id;
     const orderQuantity = req.body.quantity;
     const pickupID = parseInt(req.body.pickup_id);
     const locationID = parseInt(req.body.location_id);
-    const mealID = parseInt(req.body.meal_id);
+    const mealID = req.body.meal_id;
 
     const currentPickup = await myDB.getPickupByID(pickupID);
     const currentLocation = await myDB.getLocationByID(locationID);
-    const currentMeal = await myDB.getMeal(mealID);
+    const currentMeal = await myDB.getMealByMealID(mealID);
 
     console.log("got order quantity", orderQuantity);
     console.log("got pickup", currentPickup);

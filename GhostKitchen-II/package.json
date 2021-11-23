@@ -8,7 +8,8 @@
   "scripts": {
     "start": "node ./node_modules/nodemon/bin/nodemon.js ./bin/www",
     "migrate": "./db/migration_SQLtoMongo/1_SQLtoMongo.py",
-    "initializeDB": "./db/migration_SQLtoMongo/2_initializeDB.sh"
+    "initializeDB": "./db/migration_SQLtoMongo/2_initializeDB.sh",
+    "queries": "./db/queries/queries.sh"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

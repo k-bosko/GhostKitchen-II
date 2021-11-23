@@ -23,7 +23,7 @@
         </div>
         <hr />
         <div class="col-4">
-          <form action="/user/brands/<%= brandID %>/menu/<%= meal.meal_id %>/order/create/" method="POST">
+          <form action="/user/brands/<%= brandID %>/menu/order/create/" method="POST">
             <div class="display-6 text-capitalize">
               <%= meal.meal_name %>
             </div>
@@ -68,7 +68,7 @@
             <br />
             <div>
               <button type="submit" class="btn btn-primary" style="width: 100%;" name="meal_id"
-                value="<%= meal.meal_id %>">Checkout</button>
+                value="<%= meal._id %>">Checkout</button>
             </div>
           </form>
         </div>
