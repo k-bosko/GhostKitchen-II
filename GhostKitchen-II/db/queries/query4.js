@@ -14,15 +14,42 @@ async function run() {
     await client.connect();
     // Establish and verify connection
     const database = client.db("GhostKitchen");
+    const customers = database.collection("customers");
     const ratings = database.collection("ratings");
 
-    //TODO change query for update
-    const userID = 24;
-    const query = { customer_id: userID };
+    //query params
+    const userFirstName = "Tildy";
+    const userLastName = "Downey";
+    const meal = "Burger Special";
+    const newRating = 5;
 
-    const ratingsCount = await ratings.countDocuments(query);
+    const customer = await customers.findOne({
+      first_name: "Tildy",
+      last_name: "Downey",
+    });
 
-    console.log(`number of ratings left by user #${userID}: ${ratingsCount}`);
+    const filter = {
+      customer_id: customer.id,
+      meal_name: "Burger Special",
+    };
+
+    const update = {
+      $set: {
+        rating: newRating,
+      },
+    };
+
+    console.log("*******************************************************");
+    console.log(
+      `Query 4: Update the rating left by ${userFirstName} ${userLastName} for ${meal}`
+    );
+    console.log("*******************************************************");
+    console.log("Customer:", customer);
+    console.log("Current rating:", await ratings.findOne(filter));
+
+    await ratings.updateOne(filter, update);
+
+    console.log("Updated rating:", await ratings.findOne(filter));
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();

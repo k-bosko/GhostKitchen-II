@@ -16,13 +16,16 @@ async function run() {
     const database = client.db("GhostKitchen");
     const ratings = database.collection("ratings");
 
-    const userID = 24;
+    const userID = 151;
     const query = { customer_id: userID };
 
     const ratingsCount = await ratings.countDocuments(query);
 
-    console.log(`Query 3: What is the number of ratings left by user #${userID}?`);
-    console.log(ratingsCount});
+    console.log("*******************************************************");
+    console.log(`Query 3: How many ratings did the user #${userID} leave?
+      (Note: count documents requirement)`);
+    console.log("*******************************************************");
+    console.log(ratingsCount);
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
