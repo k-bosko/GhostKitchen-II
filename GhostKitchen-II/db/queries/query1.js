@@ -28,7 +28,9 @@ async function run(){
             }
           ];
         const ordersCount = await orders.aggregate(query).toArray();
+        console.log("*******************************************************");
         console.log("Query1: How many customers ordered Burger Special on Doordash?");
+        console.log("*******************************************************");
         console.log(ordersCount[0].count);
     }finally{
         await client.close();

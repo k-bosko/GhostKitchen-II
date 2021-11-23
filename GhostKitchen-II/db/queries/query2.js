@@ -21,7 +21,9 @@ async function run(){
             ]
         }
         const ordersCount = await orders.find(query).count();
+        console.log("*******************************************************");
         console.log("Query2: How many orders are takeouts in California?");
+        console.log("*******************************************************");
         console.log(ordersCount);
     }finally{
         await client.close();
