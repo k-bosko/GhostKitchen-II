@@ -226,7 +226,7 @@ async function getAllCurrentOrders() {
       };
     
 
-    const orders = await collection.find(query).toArray();
+    const orders = await collection.find(query);
 
     //console.log("orders from db", orders);
 
@@ -313,7 +313,7 @@ async function getMeal(mealID) {
 
     const collection = db.collection("meals");
 
-    const meal = await collection.findOne({ _id: parseInt(mealID) });
+    const meal = await collection.findOne({ _id: ObjectId(mealID) });
 
     return meal;
   } finally {
