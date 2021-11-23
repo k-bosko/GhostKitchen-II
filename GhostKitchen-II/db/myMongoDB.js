@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
 let ObjectId = require("mongodb").ObjectId;
 
+/* ------Katerina----- */
 // cached propeties
 let cachedPickups;
 let cachedLocations;
@@ -629,6 +630,7 @@ async function deleteOrder(orderID) {
     await client.close();
   }
 }
+/* ------Katerina----- */
 
 module.exports = {
   getUser,

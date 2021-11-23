@@ -46,7 +46,7 @@
                                     <%= f.order_quantity %>
                                 </td>
                                 <td scope="col">
-                                    $<%= f.meal_info.price * f.order_quantity %>
+                                    $<%= (f.meal_info.price * f.order_quantity).toFixed(2) %>
                                 </td>
                                 <td scope="col" style="text-transform:capitalize">
                                     <%= f.pickup.type %>
