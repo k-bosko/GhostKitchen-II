@@ -233,6 +233,42 @@ async function getAllCurrentOrders() {
   }
 }
 
+async function updatePickupTime(orderID){
+  let client;
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    //const pickup_time = new Date(Date.now());
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("orders");
+
+    const query = 
+      {order_id: orderID},
+      {
+      //   $currentDate: {
+      //     pickup_time: true,
+      // },
+      }
+  
+    const orders = await collection.updateOne(query).toArray();
+
+    console.log("orders from db", orders);
+
+    return orders;
+  } finally {
+    await client.close();
+  }
+}
+
 module.exports = {
   getUser,
   getBrands,
@@ -240,5 +276,6 @@ module.exports = {
   getOrdersBy,
   getBrandsBy,
   createMeal,
-  getAllCurrentOrders
+  getAllCurrentOrders,
+  updatePickupTime
 };

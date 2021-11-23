@@ -34,15 +34,15 @@ router.get("/admin/orders", async function (req, res, next) {
   res.render("adminOrders", { orders: orders });
 });
 
-// /* POST admin (orders) page. */
-// router.post("/admin/orders/:orderID/update", async function (req, res, next) {
-//   const orderID = req.body.orderID;
+/* POST admin (orders) page. */
+router.post("/admin/orders/:orderID/update", async function (req, res, next) {
+  const orderID = req.body.orderID;
 
-//   await myDB.updatePickupTime(orderID);
+  await myDB.updatePickupTime(orderID);
 
-//   console.log("pickup time updated");
-//   res.redirect("/admin/orders");
-// });
+  console.log("pickup time updated");
+  res.redirect("/admin/orders");
+});
 
 /* GET Admin (brands) page. */
 router.get("/admin/brands", async function (req, res, next) {
