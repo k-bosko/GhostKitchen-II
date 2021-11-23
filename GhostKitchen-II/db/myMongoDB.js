@@ -211,6 +211,7 @@ async function getAllCurrentOrders() {
     const url = "mongodb://localhost:27017";
 
     client = new MongoClient(url);
+    //client = new MongoClient(url, { useUnifiedTopology: true}, { useNewUrlParser: true }, { connectTimeoutMS: 30000 }, { keepAlive: 1});
 
     await client.connect();
 
@@ -221,14 +222,19 @@ async function getAllCurrentOrders() {
     const collection = db.collection("orders");
 
     const query = 
+    [
       {
-        pickup_time: null
-      };
+        $match: {
+          pickup_time: null,
+  
+        },
+      },
+    ];
     
 
-    const orders = await collection.find(query);
+    const orders = await collection.aggregate(query).toArray();
 
-    //console.log("orders from db", orders);
+    console.log("orders from db", orders);
 
     return orders;
   } finally {
@@ -297,7 +303,8 @@ async function deleteMeal(mealID) {
   }
 }
 
-async function getMeal(mealID) {
+//Jiayi's getMeal
+async function getMealByMealID(mealID) {
   let client;
 
   try {
@@ -314,6 +321,31 @@ async function getMeal(mealID) {
     const collection = db.collection("meals");
 
     const meal = await collection.findOne({ _id: ObjectId(mealID) });
+
+    return meal;
+  } finally {
+    await client.close();
+  }
+}
+
+//Katerina's getMeal
+async function getMeal(mealID) {
+  let client;
+
+  try {
+    const url = "mongodb://localhost:27017";
+
+    client = new MongoClient(url);
+
+    await client.connect();
+
+    console.log("Connected to Mongo Server");
+
+    const db = client.db("GhostKitchen");
+
+    const collection = db.collection("meals");
+
+    const meal = await collection.findOne({ meal_id: parseInt(mealID) });
 
     return meal;
   } finally {
@@ -609,6 +641,7 @@ module.exports = {
   updatePickupTime,
   deleteMeal,
   getMeal,
+  getMealByMealID,
   updateMeal,
   getPickup,
   getPickupByID,

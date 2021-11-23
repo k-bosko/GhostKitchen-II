@@ -26,7 +26,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Order #</th>
+                            <!-- <th scope="col">Order #</th> -->
                             <th scope="col">Brand</th>
                             <th scope="col">Meal</th>
                             <th scope="col">Quantity</th>
@@ -35,9 +35,9 @@
                     </thead>
                     <tbody>
                         <% orders.forEach(function (f) {%>
-                                <td scope="col">
+                                <!-- <td scope="col">
                                     <%= f.order_id %>
-                                </td>
+                                </td> -->
                                 <td scope="col">
                                     <%= f.meal_info.brand_name %>
                                 </td>
@@ -48,7 +48,7 @@
                                     <%= f.order_quantity %>
                                 </td>
                                 <td scope="col" style="text-transform:capitalize">
-                                    <%= f.pickup_type %>
+                                    <%= f.pickup.type %>
                                 </td>
                                 <td>
                                     <form action="/admin/orders/update" method="POST">

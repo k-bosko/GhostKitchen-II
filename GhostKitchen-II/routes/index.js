@@ -29,8 +29,9 @@ router.get("/admin", async function (req, res, next) {
 
 /* GET admin (orders) page. */
 router.get("/admin/orders", async function (req, res, next) {
+  console.log("GOT get request for order page");
   const orders = await myDB.getAllCurrentOrders();
-  //console.log("got orders", orders);
+  console.log("got orders", orders);
   res.render("adminOrders", { orders: orders });
 });
 
@@ -116,7 +117,7 @@ router.get("/admin/brands/:brandID/meals/:mealID", async function (req, res, nex
   console.log("got meal details", mealID);
   console.log(req.body);
   console.log("got brandID", brandID);
-  const mealDetails = await myDB.getMeal(mealID);
+  const mealDetails = await myDB.getMealByMealID(mealID);
 
   console.log("meal details", mealDetails);
   res.render("mealUpdate", {
