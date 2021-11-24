@@ -66,9 +66,11 @@ npm run migrate
 ![2_Conceptual_model](https://user-images.githubusercontent.com/37320474/143147989-4d8e2c5d-866e-45e6-92fd-1ab98e81ecd7.png)
 
 ### Hierarchical Table
+Lucidchart Link: https://lucid.app/lucidchart/dadecf72-7d61-4582-96fc-090aef165d4f/edit?from_docslist=true&page=HWEp-vi-RSFO&invitationId=inv_8d605731-0625-457c-97ee-1fafd2df30a3#
 ![GhostKitchen_HierarchicalTable](https://user-images.githubusercontent.com/37320474/143148059-47f825be-ce5c-4fb7-aa49-c07aad93825d.png)
 
 ### JSON Examples
+Lucidchart Link: https://lucid.app/lucidchart/3ef81b4c-31c3-4d86-bd8f-4ac86cbf676d/edit?beaconFlowId=83F0E91B1C399D3E&invitationId=inv_7633321b-0b20-4372-8386-e2275ef2e883&page=HWEp-vi-RSFO#
 ![GhostKitchen-JSON](https://user-images.githubusercontent.com/37320474/143150697-6330e34f-223f-4599-aec9-f5e391ba95d4.png)
 
 
