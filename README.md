@@ -32,6 +32,9 @@ Check out our **GhostKitchen app** that was implemented using Express framework 
 ### Hierarchical Table
 ![GhostKitchen_HierarchicalTable](https://user-images.githubusercontent.com/37320474/143148059-47f825be-ce5c-4fb7-aa49-c07aad93825d.png)
 
+### JSON Examples
+![GhostKitchen-JSON](https://user-images.githubusercontent.com/37320474/143150697-6330e34f-223f-4599-aec9-f5e391ba95d4.png)
+
 ## Using the app
 
 1) Clone the repo and cd into `GhostKitchen-II`
