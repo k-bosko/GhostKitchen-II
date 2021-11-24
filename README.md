@@ -33,7 +33,7 @@ Check out our **GhostKitchen app** that was implemented using Express framework 
 
 ## Using the app
 
-1) Clone the repo and cd into `GhostKitchen-II`
+1) Clone the repo and cd into `GhostKitchen-II/GhostKitchen-II/` (where the app is)
 2) Install the dependencies
 
 ```
