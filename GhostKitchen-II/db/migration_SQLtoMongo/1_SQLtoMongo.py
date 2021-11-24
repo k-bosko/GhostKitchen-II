@@ -83,7 +83,7 @@ subprocess.run(["/usr/local/opt/sqlite/bin/sqlite3", f"{path}/ghost_kitchen.db",
          FROM Meal AS m
          JOIN Virtual_Brand AS vb
          ON m.brand_id = vb.id
-         LEFT JOIN Rating AS r
+         JOIN Rating AS r
          ON r.meal_id = m.id'''])
 
 #5. Create Locations.json
