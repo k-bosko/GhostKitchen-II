@@ -9,7 +9,7 @@ let cachedLocations;
 async function getUser(userId) {
   let client;
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
     //^^connect to protocol
     client = new MongoClient(url);
 
@@ -35,7 +35,7 @@ async function getUser(userId) {
 async function getBrands() {
   let client;
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
     //^^connect to protocol
     client = new MongoClient(url);
 
@@ -71,7 +71,7 @@ async function getMealsBy(brandID) {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -104,7 +104,7 @@ async function getOrdersBy(userID) {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -142,7 +142,7 @@ async function getBrandsBy(brandID) {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -177,7 +177,7 @@ async function createMeal(newMeal, brand_name, brandID) {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -208,7 +208,7 @@ async function getAllCurrentOrders() {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
     //client = new MongoClient(url, { useUnifiedTopology: true}, { useNewUrlParser: true }, { connectTimeoutMS: 30000 }, { keepAlive: 1});
@@ -243,7 +243,7 @@ async function updatePickupTime(orderID) {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -279,7 +279,7 @@ async function deleteMeal(mealID) {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -304,7 +304,7 @@ async function getMealByMealID(mealID) {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -317,7 +317,6 @@ async function getMealByMealID(mealID) {
     const collection = db.collection("meals");
 
     const meal = await collection.findOne({ _id: ObjectId(mealID) });
-    console.log("current meal:", meal);
     return meal;
   } finally {
     await client.close();
@@ -335,7 +334,7 @@ async function updateMeal(
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -385,7 +384,7 @@ async function getLocations(renewCache = false) {
   }
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -416,7 +415,7 @@ async function getPickup(renewCache = false) {
   }
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -476,7 +475,7 @@ async function createOrder(quantity, pickup, location, meal, userID) {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -523,7 +522,7 @@ async function getOrderByID(orderID) {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -549,7 +548,7 @@ async function updateOrder(orderID, quantity, pickup) {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
@@ -590,7 +589,7 @@ async function deleteOrder(orderID) {
   let client;
 
   try {
-    const url = "mongodb://localhost:27017";
+    const url = "mongodb://0.0.0.0:27017/";
 
     client = new MongoClient(url);
 
