@@ -1,12 +1,62 @@
 # GhostKitchen-II
 **Team:** Katerina Bosko, Jiayi Li
 
-This is the continuation of our project ["GhostKitchen"](https://github.com/Jiayi-Emily-Li/GhostKitchen) that was implemented using Express framework for Node.js, SQLite and Bootstrap.
-
-In this project, we migrated SQL database into MongoDB and rewrote the queries using MQL - Mongo's query language. 
-
-## Project description
 In this project, we implement a database for a restaurant chain "Golden triangle" which has 5 locations across several U.S. states. The company wants to try out the new business model - ghost kitchen - meaning that the restaurants can create "virtual brands" without providing in-dining options and customers order the new menu items for takeout, drive-through and delivery only. The advantages of this model is that the restaurants can save costs, experiment with new menus and create in-house analytics.
+
+**GhostKitchen-II** is the continuation of our project ["GhostKitchen"](https://github.com/Jiayi-Emily-Li/GhostKitchen) that was implemented using Express framework for Node.js, SQLite and Bootstrap.
+
+Here we migrated SQL database into **MongoDB** and rewrote the queries using MQL - Mongo's query language. 
+
+See [GhostKitchen-III](https://github.com/k-bosko/GhostKitchen-III) for implementation of the same app using **Redis** 
+
+## App
+![](ghostkitchen.gif)
+
+Using the app:
+
+1) Clone the repo and cd into `GhostKitchen-II/GhostKitchen-II/` (where the app is)
+2) Install the dependencies
+
+```
+npm install
+```
+
+3) Start the server
+
+```
+npm start
+```
+
+4) Start MongoDB instance in your local machine
+Assuming that you have MongoDB installed, you can do it on MacOS by running
+
+```
+brew services start mongodb-community
+```
+
+To install MongoDB on MacOS run:
+```
+brew install mongodb-community
+```
+
+5) Import database into your MongoDB local instance by running 
+
+```
+npm run initializeDB
+```
+
+6) Point your browser to http://locahost:3000
+
+*Notes:* 
+
+You can download dump of the database from `./GhostKitchen-II/db/dump`
+
+You can also run the script that migrates data from SQLite to JSON (`./GhostKitchen-II/db/migration_SQLtoMongolike/1_SQLtoMongo.py`) like so:
+```
+npm run migrate
+```
+
+## Database Design
 
 To create a MongoDB database, we went through the whole database creation cycle:
 
@@ -29,48 +79,13 @@ To run the above queries, start the queries script after downloading the app and
 npm run queries
 ```
 
-Check out our **GhostKitchen app** that was implemented using Express framework for Node.js, MongoDB and Bootstrap.
-
-## Using the app
-
-1) Clone the repo and cd into `GhostKitchen-II/GhostKitchen-II/` (where the app is)
-2) Install the dependencies
-
-```
-npm install
-```
-
-3) Start the server
-
-```
-npm start
-```
-
-4) Point your browser to http://locahost:3000
-
-5) Import database into your MongoDB local instance by running 
-
-```
-npm run initializeDB
-```
-*Notes:* 
-
-You can download dump of the database from `./GhostKitchen-II/db/dump`
-
-You can also run the script that migrates data from SQLite to JSON (`./GhostKitchen-II/db/migration_SQLtoMongolike/1_SQLtoMongo.py`) like so:
-```
-npm run migrate
-```
-
 ### Conceptual Model
 ![2_Conceptual_model](https://user-images.githubusercontent.com/37320474/143147989-4d8e2c5d-866e-45e6-92fd-1ab98e81ecd7.png)
 
 ### Hierarchical Table
-Lucidchart Link: https://lucid.app/lucidchart/dadecf72-7d61-4582-96fc-090aef165d4f/edit?from_docslist=true&page=HWEp-vi-RSFO&invitationId=inv_8d605731-0625-457c-97ee-1fafd2df30a3#
 ![GhostKitchen_HierarchicalTable](https://user-images.githubusercontent.com/37320474/143148059-47f825be-ce5c-4fb7-aa49-c07aad93825d.png)
 
 ### JSON Examples
-Lucidchart Link: https://lucid.app/lucidchart/3ef81b4c-31c3-4d86-bd8f-4ac86cbf676d/edit?beaconFlowId=83F0E91B1C399D3E&invitationId=inv_7633321b-0b20-4372-8386-e2275ef2e883&page=HWEp-vi-RSFO#
 ![GhostKitchen-JSON](https://user-images.githubusercontent.com/37320474/143150697-6330e34f-223f-4599-aec9-f5e391ba95d4.png)
 
 
