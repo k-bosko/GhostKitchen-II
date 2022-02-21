@@ -88,6 +88,8 @@ npm run queries
 ### JSON Examples
 ![GhostKitchen-JSON](https://user-images.githubusercontent.com/37320474/143150697-6330e34f-223f-4599-aec9-f5e391ba95d4.png)
 
+### Query Example
+![GhostKitchen Query](4_MQL_query5_example.jpeg)
 
 # Work Distribution
 Jiayi Li worked on creating the Admin page and CRUD Meals and Orders collections.
