@@ -12,8 +12,18 @@ See [GhostKitchen-III](https://github.com/k-bosko/GhostKitchen-III) for implemen
 ## App
 ![](ghostkitchen.gif)
 
-Using the app:
 
+### Containerized app
+1) Download `docker-compose.yml` file from this repository
+2) cd into respository where you saved docker-compose.yml
+3) run the following command to start the app:
+```
+docker-compose up
+```
+Note: you need Docker installed.
+
+### Install dependencies yourself
+ 
 1) Clone the repo and cd into `GhostKitchen-II/GhostKitchen-II/` (where the app is)
 2) Install the dependencies
 
