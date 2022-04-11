@@ -1,0 +1,32 @@
+version: "3"
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    command: --quiet
+  mongo-seed:
+    image: kbosko/ghostkitchen_final_mongo-seed
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+  node-initializer:
+    image: kbosko/ghostkitchen_final_node-initializer
+    depends_on:
+      - mongo-seed
+    links:
+      - mongodb
+  ghostkitchen-app:
+    image: kbosko/ghostkitchen-container
+    restart: unless-stopped
+    expose:
+      - "3000"
+    ports:
+      - 127.0.0.1:3000:3000
+    depends_on:
+      - mongodb
+      - mongo-seed
+      - node-initializer
+    links:
+      - mongodb
